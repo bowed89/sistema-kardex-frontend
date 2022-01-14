@@ -1,0 +1,40 @@
+<div class="ui-g-12">
+    <!-- etiqueta para los mensajes-->
+    <p-toast key="tst" [style]="{marginTop: '70px'}"></p-toast>
+    <div class="login-body">
+        <div class="login-panel ui-fluid">
+            <div class="login-panel-header">
+                <img src="assets/layout/images/logo-icon.png">
+            </div>
+            <div class="login-panel-content">
+                <form #form="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <h1>Login de usuarios</h1>
+                        </div>
+                        <div class="ui-g-12">
+                            <span class="md-inputfield">
+                                <input type="email" id="usuario" name="usuario" [(ngModel)]="loginBody.login"
+                                    pInputText>
+                                <label>Usuario</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12">
+                            <span class="md-inputfield">
+                                <input type="password" id="contrasenia" name="contrasenia"
+                                    [(ngModel)]="loginBody.password" pInputText>
+                                <label>Contraseña</label>
+                            </span>
+                        </div>
+                        <div class="ui-g-12">
+                            <button pButton type="submit" label="Entrar" icon="ui-icon-person"></button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

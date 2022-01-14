@@ -1,0 +1,73 @@
+<div class="col-sm-12 col-lg-12">
+    <div class="card" [style]="{'font-size':'19px'}">
+        <div class="card-body">
+            <div class="card card-w-title">
+                <p-table #dt [columns]="cols" [value]="personal" [paginator]="true" [rows]="10" dataKey="vin"
+                    [(selection)]="selectedCar">
+                    <ng-template pTemplate="caption">
+                        USUARIOS REGISTRADOS
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr [pSelectableRow]="rowData">
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                <input *ngSwitchCase="'login'" pInputText type="text" placeholder="Buscar Email"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'descripcion'" pInputText type="text" placeholder="Buscar Permiso"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.login}}</td>
+                            <td>{{ rowData.descripcion | uppercase}}</td>
+                            <td>
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <button pButton type="button" label="ASIGNAR PERMISO"
+                                            icon="ui-icon-do-not-disturb-on" class="green-btn"
+                                            (click)="abrirModal(rowData.id_usuario)"></button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL AGREGAR NUEVO USUARIO -->
+<p-dialog header="PERMISOS" [resizable]="false" responsive="true" [(visible)]="dialogVisible">
+    <div class="ui-g form-group" style="margin-bottom: 16px;">
+        <div class="card card-w-title">
+            <select class="form-select" [(ngModel)]="accionseleccionada" (change)="dropboxSelect($event)">
+                <option [value]="1">ADMINISTRADOR</option>
+                <option [value]="2">CONSULTAS</option>
+                <option [value]="3">FUNCIONARIO</option>
+                <option [value]="4">INHABILITAR</option>
+            </select>
+        </div>
+    </div>
+
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" label="Cambiar" (click)="dropboxSend()" icon="ui-icon-person" class="green-btn"
+                (click)="dialogVisible=false" pButton></button>
+            <button type="button" label="Cancelar" icon="ui-icon-close" class="red-btn" (click)="dialogVisible=false"
+                pButton></button>
+
+        </div>
+    </p-footer>
+</p-dialog>

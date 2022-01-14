@@ -1,0 +1,185 @@
+<div class="ui-g-12">
+    <!-- etiqueta para los mensajes-->
+    <p-toast key="tst" [style]="{marginTop: '70px'}"></p-toast>
+    <div class="card card-w-title">
+        <!-- <h1>{{ nombre | uppercase }}</h1> -->
+        <p-tabView [style]="{fontSize: '18px'}">
+            <!-- LLENADO DE DATOS -->
+            <p-tabPanel header="Llenado de Datos del Funcionario" leftIcon="ui-icon-check">
+                <p-table #dt [columns]="colsLlenado" [style]="{'margin-bottom':'20px'}" [value]="personal"
+                    [paginator]="false" [rows]="10" dataKey="vin">
+
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.nombres}}</td>
+                            <td>{{ rowData.ap_paterno }} {{ rowData.ap_materno }}</td>
+                            <td>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p-dropdown [style]="{padding: '15px'}" [options]="extensionLlenado"
+                                            [(ngModel)]="accionseleccionada"
+                                            (onChange)="seleccionarAccion($event.value, rowData.id_personal)">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+            <!-- FIN DEL LLENADO DE DATOS -->
+            <!-- FORMULARIO 26 -->
+            <p-tabPanel header="Formulario 26 Ficha de Personal" leftIcon="ui-icon-check" *ngIf="booleanGrupo">
+                <p-table #dt [columns]="cols" [style]="{'margin-bottom':'20px'}" [value]="personal" [paginator]="false"
+                    [rows]="10" dataKey="vin" [(selection)]="selectedCar">
+                    <ng-template pTemplate="caption">
+                        <p style="font-size: 16px;">FORMULARIO 26</p>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr [pSelectableRow]="rowData">
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                <input *ngSwitchCase="'cargo'" pInputText type="text" placeholder="Bsucar Cargo"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.nombres}}</td>
+                            <td>{{ rowData.ap_paterno }} {{ rowData.ap_materno }}</td>
+                            <td>{{ rowData.ci }} {{ rowData.extension }}.</td>
+                            <td>
+                                <button pButton type="button" icon="ui-icon-insert-drive-file"
+                                    label="DESCARGAR FORMULARIO 26" style="margin-bottom:10px" class="ui-button-success"
+                                    [routerLink]="['/formulario26', idPersonal]"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+            <!-- FIN DEL FORMULARIO 26 -->
+            <!-- FORMULARIO 29 -->
+            <p-tabPanel header="Formulario 29 Inventario de Personal" leftIcon="ui-icon-edit" *ngIf="booleanGrupo">
+                <p-table #dt [columns]="cols" [style]="{'margin-bottom':'20px'}" [value]="personal" [paginator]="false"
+                    [rows]="10" dataKey="vin">
+                    <ng-template pTemplate="caption">
+                        <p style="font-size: 16px;">FORMULARIO 29</p>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr [pSelectableRow]="rowData">
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                <input *ngSwitchCase="'cargo'" pInputText type="text" placeholder="Bsucar Cargo"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.nombres}}</td>
+                            <td>{{ rowData.ap_paterno }} {{ rowData.ap_materno }}</td>
+                            <td>{{ rowData.ci }} {{ rowData.extension }}.</td>
+                            <td>
+                                <button pButton type="button" icon="ui-icon-insert-drive-file"
+                                    label="DESCARGAR FORMULARIO 29" style="margin-bottom:10px" class="ui-button-success"
+                                    [routerLink]="['/formulario29', idPersonal]"></button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-tabPanel>
+            <!-- FIN DEL FORMULARIO 29 -->
+            <!-- FICHA DE SUBIR ARCHIVOS-->
+            <p-tabPanel header="Subir Archivos" leftIcon="ui-icon-refresh" *ngIf="booleanGrupo">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="card">
+                            <h1>Subir Archivo</h1>
+
+                            <input class="form-control" type="file" id="file" (change)="preview($event.target.files)"
+                                accept=".pdf">
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="card">
+                            <h1>Archivos</h1>
+                            <div class="list-group">
+                                <button type="button" *ngFor="let list of listadoArchivos; let i = index"
+                                    class="list-group-item list-group-item-action" [value]="list"
+                                    (click)="mostrarImg($event, i)">
+                                    {{ list }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <!-- FIN DE SUBIR FOTO FUNCIONARIO -->
+            <p-tabPanel header="Subir Foto del Funcionario" leftIcon="ui-icon-refresh" *ngIf="booleanGrupo">
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="card">
+                            <h1>Subir Foto</h1>
+                            <input [disabled]="!disableBtn" class="form-control" type="file" id="file" (change)="preview($event.target.files)"
+                                accept="image/*">
+                        </div>
+                    </div>
+                    <div class="ui-g-12 ui-lg-6">
+                        <div class="card">
+                            <h1>Archivos</h1>
+                            <div class="list-group">
+                                <button type="button" *ngFor="let list of listadoFotos; let i = index"
+                                    class="list-group-item list-group-item-action" [value]="list">
+                                    {{ list }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-tabPanel>
+            <!-- FIN DE SUBIR FOTO FUNCIONARIO -->
+        </p-tabView>
+    </div>
+</div>  
+
+
+<!-- ******************************************* MODALES FICHA PERSONAL SIGMA ******************************************* -->
+
+<!-- MODAL MOSTRAR IMAGENES -->
+<!-- Modal -->
+<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAdd" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- <img style="width: 100px;" [src]="pdf|safe"> -->
+
+        </div>
+    </div>
+</div>
+
+<!-- FIN DE MODAL MOSTRAR IMAGENES -->
+
+<!-- ******************************************* FIN DE MODALES FICHA PERSONAL SIGMA ******************************************* -->

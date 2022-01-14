@@ -1,0 +1,302 @@
+<div class="container">
+    <div class="d-flex justify-content-start mt-4">
+        <button class="button1" (click)="exportPDF()">IMPRIMIR</button>
+    </div>
+    <div class="d-flex justify-content-start mt-4">
+        <button class="button1" (click)="exportPDF2()">IMPRIMIR2</button>
+    </div>
+    <kendo-pdf-export id="impreso" #pdf forcePageBreak=".page-break" paperSize="Letter" margin="2cm">
+        <div class="size-a4">
+            <div class="container con-1" id="contentToConvert" style="text-align: justify;">
+                <div class="d-flex justify-content-between">
+                    <img src="../../../../assets/images/ine.png" style="width: 20%;" class="img-fluid"
+                        alt="Responsive image">
+                    <div style="font-size: 25px; font-weight: bold; text-decoration: underline; margin-top: 50px;">
+                        INVENTARIO DE PERSONAL
+                    </div>
+                    <div style="text-decoration: underline;">FORMULARIO 29</div>
+                </div> <br>
+                <div class="row">
+                    <p style="font-size: 10px; font-weight: bold">DATOS PERSONALES</p> <br><br>
+                    <div style="font-size: 10px; font-weight: normal" *ngFor="let personal of getPersonal">
+                        <div class="d-flex justify-content-between">
+                            <p> Apellidos: {{ personal.ap_paterno }} {{ personal.ap_materno }}</p>
+                            <p> C.I.: {{ personal.ci }} {{ personal.extension }}.</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p> Nombres: {{ personal.nombres }}</p>
+                            <p>Estado Civil: {{ personal.estado_civil }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p> Lugar y Fecha de Nacimiento: {{ personal.fecha_nacimiento | date: 'dd/MM/yyyy' }}</p>
+                            <p> Edad: {{ edad }}</p>
+                        </div>
+                        Profesión: {{ personal.profesion }} <br><br>
+                        <div class="row">
+                            <div class="col-md-3">Domicilio:</div>
+                            <div class="col-md-9">
+                                <div class="d-flex justify-content-between">
+                                    <p>{{ personal.domicilio }}</p>
+                                    <p>{{ personal.nro_domicilio }}</p>
+                                    <p>{{ personal.zona }} {{ personal.barrio }}</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <p>Calle o Avenida</p>
+                                    <p>N°</p>
+                                    <p>Zona o Barrio</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p> Teléfono domicilio: {{ personal.telefono }}</p>
+                            <p> Celular: {{ personal.celular }}</p>
+                            <p> E-mail: {{ personal.email }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p> Teléfono de emergencia: {{ personal.telefono_emergencia }}</p>
+                            <p> Celular: {{ personal.celular }}</p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p> Tipo de sangre: {{ personal.tipo_sangre }}</p>
+                            <p> Medicamentos a los <br> que tiene alergia: {{ personal.med_alergias }}</p>
+                        </div>
+                        <p style="font-size: 10px; font-weight: bold">DATOS CÓNYUGUE</p>
+                        <div *ngFor="let conyugue of getConyugue">
+                            <p> Apellidos y Nombres: {{ conyugue.ap_paterno }} {{ conyugue.ap_materno }} {{
+                                conyugue.nombres }}</p>
+                            <div class="d-flex justify-content-between">
+                                <p> Ocupación: {{ conyugue.ocupacion }}</p>
+                                <p> Teléfonos: {{ conyugue.telefono }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 10px; font-weight: bold">DEPENDIENTES</p> 
+                    <table style="font-size: 10px" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">NOMBRES</th>
+                                <th scope="col">PARENTESCO</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let dependiente of getDependientes; let i = index">
+                            <tr>
+                                <td>{{ i+1 }}</td>
+                                <td>{{ dependiente.nombres }}</td>
+                                <td>{{ dependiente.parentesco }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 10px; font-weight: bold">DEPENDIENTES CON DISCAPACIDAD
+                        (Indique los nombres de las personas bajo su dependencia económica que presenten discapacidad
+                        especial con un grado mayor al 31%)</p> 
+                    <table style="font-size: 10px" class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">NOMBRES</th>
+                                <th scope="col">PARENTESCO</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let dependiente of getDependienteSi; let i = index">
+                            <tr>
+                                <td>{{ i+1 }}</td>
+                                <td>{{ dependiente.nombres }}</td>
+                                <td>{{ dependiente.parentesco }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 10px; font-weight: bold">INFORMACIÓN INSTITUCIONAL</p> <br>
+                    <div style="font-size: 10px; font-weight: normal" *ngFor="let personal2 of getPersonal">
+                        <p> Cargo Actual: {{ personal2.denominacion_puesto }}</p>
+                        <p> Fecha de ingreso al cargo actual: {{ personal2.fecha_ingreso_cargo | date: 'dd/MM/yyyy' }}
+                        </p>
+                        <p> Cargo del Jefe Inmediato Superior:{{ personal2.cargo_jefe_inmediato }}</p>
+                        <p> Última fecha de Ingreso al INE sin cortes: {{ personal2.ultima_fecha_ingreso_ine | date:
+                            'dd/MM/yyyy' }}</p>
+                        <p> Calificación de Años de Servicio: {{ personal2.calif_anios_servicio }}</p>
+                    </div>
+                    <p style="font-size: 10px; font-weight: bold">EXPERIENCIA LABORAL</p>
+                    <p style="font-size: 10px; font-weight: bold">a) EXPERIENCIA LABORAL INTERNA (Indique los tres
+                        últimos puestos ejercidos en el INE, empezando por el actual).</p>
+                    <table style="font-size: 10px" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">INSTITUCIÓN</th>
+                                <th scope="col">ÁREA</th>
+                                <th scope="col">NOMBRE DEL PUESTO</th>
+                                <th scope="col">FECHA DE INICIO</th>
+                                <th scope="col">FECHA DE CONCLUSIÓN </th>
+                                <th scope="col">TIPO DE FUNCIONARIO <br> (designado, de carrera, Interino, Consultor u
+                                    Otro) </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let expInt of getExperienciaI">
+                                <td>{{ expInt.institucion }}</td>
+                                <td>{{ expInt.area }}</td>
+                                <td>{{ expInt.nombre_puesto }}</td>
+                                <td>{{ expInt.fecha_inicio | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ expInt.fecha_conclusion | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ expInt.tipo_funcionario }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="font-size: 10px; font-weight: bold">b) EXPERIENCIA LABORAL EXTERNA (Indique los tres
+                        últimos puestos ejercidos en otras instituciones).</p>
+                    <table style="font-size: 10px" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">INSTITUCIÓN</th>
+                                <th scope="col">ÁREA</th>
+                                <th scope="col">NOMBRE DEL PUESTO</th>
+                                <th scope="col">FECHA DE INICIO</th>
+                                <th scope="col">FECHA DE CONCLUSIÓN </th>
+                                <th scope="col">TIEMPO DE TRABAJO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let expInt of getExperienciaE">
+                                <td>{{ expInt.institucion }}</td>
+                                <td>{{ expInt.area }}</td>
+                                <td>{{ expInt.nombre_puesto }}</td>
+                                <td>{{ expInt.fecha_inicio | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ expInt.fecha_conclusion | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ expInt.tiempo_trabajo }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </kendo-pdf-export>
+
+    <kendo-pdf-export id="impreso2" #pdf forcePageBreak=".page-break" paperSize="Letter" margin="2cm">
+        <div class="size-a4">
+            <div class="container con-1" id="contentToConvert" style="text-align: justify;">
+                <div class="row">
+                    <div style="font-size: 10px; font-weight: normal">
+                        <p style="font-size: 10px; font-weight: bold">GRADO DE EDUCACIÓN</p>
+                        <p style="font-size: 10px; font-weight: bold">a) ESCOLAR (Indicar el último curso vencido)</p>
+                        <div style="font-size: 10px; font-weight: normal">
+                            <div *ngFor="let primaria of getEducPrimaria">
+                                <div class="d-flex justify-content-between">
+                                    <p> Primaria: {{ primaria.fecha_titulacion | date: 'dd/MM/yyyy' }}</p>
+                                    <p> Colegio: {{ primaria.nombre_instituto }}</p>
+                                </div>
+                            </div>
+                            <div *ngFor="let secundaria of getEducSecundaria">
+                                <div class="d-flex justify-content-between">
+                                    <p> Secundaria: {{ secundaria.fecha_titulacion | date: 'dd/MM/yyyy' }}</p>
+                                    <p> Colegio: {{ secundaria.nombre_instituto }}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between" *ngIf="x">
+                                <p> Bachiller: <br> (Marcar con una X)</p>
+                                <p>SI: X</p>
+                                <p>NO</p>
+                                <p *ngFor="let bach of getEducBachiller">Colegio: {{ bach.nombre_instituto }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between" *ngIf="!x">
+                                <p> Bachiller: <br> (Marcar con una X)</p>
+                                <p>SI</p>
+                                <p>NO: X</p>
+                                <p>Colegio: </p>
+                            </div>
+                            <p *ngFor="let bach of getEducBachiller">Lugar y fecha <br> de titulación: {{bach.fecha_titulacion | date: 'dd/MM/yyyy'}}  </p>
+                            <p style="font-size: 10px; font-weight: bold">b)  TÉCNICA Y TECNOLOGÍA</p>
+                            <table style="font-size: 10px" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">NIVEL DE <br> FORMACIÓN</th>
+                                        <th scope="col">CARRERA</th>
+                                        <th scope="col">FECHA DE <br> TITULACIÓN</th>
+                                        <th scope="col">INSTITUCIÓN</th>
+                                        <th scope="col">LUGAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let tecnico of getEducTecnico">
+                                        <td>{{ tecnico.titulo }}</td>
+                                        <td>{{ tecnico.nombre_carrera }}</td>
+                                        <td>{{ tecnico.fecha_titulacion | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ tecnico.nombre_instituto }}</td>
+                                        <td>{{ tecnico.lugar_titulacion }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p style="font-size: 10px; font-weight: bold">c) UNIVERSITARIA</p>
+                            <table style="font-size: 10px" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">NIVEL DE FORMACIÓN</th>
+                                        <th scope="col">CARRERA</th>
+                                        <th scope="col">FECHA DE <br> TITULACIÓN</th>
+                                        <th scope="col">INSTITUCIÓN</th>
+                                        <th scope="col">LUGAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let licenciatura of getEdLicenciatura">
+                                        <td>{{ licenciatura.titulo }}</td>
+                                        <td>{{ licenciatura.nombre_carrera }}</td>
+                                        <td>{{ licenciatura.fecha_titulacion | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ licenciatura.nombre_instituto }}</td>
+                                        <td>{{ licenciatura.lugar_titulacion }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p style="font-size: 10px; font-weight: bold">d) POSTGRADO</p>
+                            <table style="font-size: 10px" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">GRADO ACADÉMICO	</th>
+                                        <th scope="col">NOMBRE</th>
+                                        <th scope="col">FECHA DE <br> TITULACIÓN</th>
+                                        <th scope="col">INSTITUCIÓN</th>
+                                        <th scope="col">LUGAR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let postgrado of getPostgrado">
+                                        <td>{{ postgrado.titulo }}</td>
+                                        <td>{{ postgrado.nombre_carrera }}</td>
+                                        <td>{{ postgrado.fecha_titulacion | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ postgrado.nombre_instituto }}</td>
+                                        <td> {{ postgrado.lugar_titulacion }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>                        
+                            <p style="font-size: 10px; font-weight: bold">e) CAPACITACIÓN (Durante la gestión pasada, adjuntar certificados)</p>
+                            <table style="font-size: 10px" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">EVENTO</th>
+                                        <th scope="col">INSTITUCIÓN</th>
+                                        <th scope="col">FECHA DE <br> INICIO</th>
+                                        <th scope="col">FECHA DE <br> CONCLUSIÓN</th>
+                                        <th scope="col">CARGA HORARIA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let seminario of getSeminario">
+                                        <td>{{ seminario.nombre_carrera }}</td>
+                                        <td>{{ seminario.nombre_instituto }}</td>
+                                        <td>{{ seminario.fecha_titulacion | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ seminario.fecha_titulacion | date: 'dd/MM/yyyy' }}</td>
+                                        <td>{{ seminario.id_personal }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>Nota: Adjuntar una fotocopia de cedula de identidad actualizada</p> <br><br><br>
+                        <p style="text-align: center;">Lugar y Fecha: La Paz, {{ fechaActual | date: 'dd/MM/yyyy' }}</p>
+                        <p style="text-align: center;">Firma: </p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </kendo-pdf-export>
+</div>

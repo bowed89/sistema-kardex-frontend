@@ -1,0 +1,13 @@
+<div class="layout-sidebar" [ngClass]="{'layout-sidebar-active': app.sidebarActive, 'layout-sidebar-dark': app.darkMenu}"
+    (click)="app.onSidebarClick($event)" (mouseover)="app.sidebarActive=true" (mouseleave)="app.sidebarActive=false">
+    <div class="sidebar-logo">
+        <a href="#">
+            <img alt="logo" src="assets/layout/images/logo_ine.png" />
+        </a>
+        <a href="#" class="sidebar-anchor" title="Toggle Menu" (click)="app.onToggleMenuClick($event)"></a>
+    </div>
+    
+    <ul class="layout-menu" (click)="onMenuClick()">
+        <li app-menuitem *ngFor="let item of ex; let i = index;" [item]="item" [index]="i" [root]="true"></li>
+    </ul>
+</div>

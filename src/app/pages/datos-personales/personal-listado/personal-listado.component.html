@@ -1,0 +1,131 @@
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="card card-w-title">
+                <div class="ui-g-12 ui-md-6">
+                    <button pButton type="button" icon="ui-icon-file-download" label="EXPORTAR ARCHIVO EXCEL"
+                        style="margin-bottom:10px" class="ui-button-success" (click)="exportExcel()"></button>
+                </div>
+                <p-table #dt [columns]="cols" [style]="{'margin-bottom':'20px'}" [value]="personal"
+                    (change)="datosFiltrados(dt)" [paginator]="true" [rows]="10" dataKey="vin" selectionMode="single"
+                    [(selection)]="selectedCar">
+                    <ng-template pTemplate="caption">
+                        <p style="font-size: 16px;">PERSONALES</p>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr [pSelectableRow]="rowData">
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>   
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                <input *ngSwitchCase="'ci'" pInputText type="text"
+                                    placeholder="Buscar por cédula de identidad" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'ap_paterno'" pInputText type="text"
+                                    placeholder="Buscar Ap. Paterno" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'ap_materno'" pInputText type="text"
+                                    placeholder="Buscar Ap. Materno" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'nombres'" pInputText type="text" placeholder="Buscar Nombres"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'sexo'" pInputText type="text" placeholder="Buscar Genero"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'fecha_nacimiento'" pInputText type="text"
+                                    placeholder="Buscar F. Nacimineto" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'edad'" pInputText type="text" placeholder="Buscar F. Nacimineto"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'telefono'" pInputText type="text" placeholder="Buscar Telefono"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'fecha_sipase'" pInputText type="text"
+                                    placeholder="Buscar F.SIPASE" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'fecha_rejap'" pInputText type="text" placeholder="Buscar F.REJAP"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'idioma'" pInputText type="text" placeholder="Buscar Idioma"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'libreta'" pInputText type="text" placeholder="Buscar Libreta"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'politicas_publicas'" pInputText type="text"
+                                    placeholder="Buscar Politicas Públicas" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'certificado_1178'" pInputText type="text"
+                                    placeholder="Buscar 1178" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'funcion_publica'" pInputText type="text"
+                                    placeholder="Buscar Func. Pública" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'direccion_puesto'" pInputText type="text"
+                                    placeholder="Buscar Dirección del Puesto" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'denominacion_puesto'" pInputText type="text"
+                                    placeholder="Buscar Den. Puesto" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.ci }} {{ rowData.extension }}.</td>
+                            <td>{{ rowData.ap_paterno }}</td>
+                            <td>{{ rowData.ap_materno }}</td>
+                            <td>{{ rowData.nombres}}</td>
+                            <td>{{ rowData.sexo}}</td>
+                            <td>{{ rowData.fecha_nacimiento | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ rowData.edad}}</td>
+                            <td>{{ rowData.telefono}}</td>
+                            <td>{{ rowData.fecha_sipase | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ rowData.fecha_rejap | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ rowData.idioma}}</td>
+                            <td>{{ rowData.libreta}}</td>
+                            <td>{{ rowData.politicas_publicas}}</td>
+                            <td>{{ rowData.certificado_1178}}</td>
+                            <td>{{ rowData.funcion_publica}}</td>
+                            <td>{{ rowData.direccion_puesto}}</td>
+                            <td>{{ rowData.denominacion_puesto}}</td>
+
+
+                            <!-- 
+                            <td>
+                                <button title="Visualizar" pButton type="button" class="ui-button-success"
+                                    icon="ui-icon-search" data-bs-target="#modalVisualizar" data-bs-toggle="modal"
+                                    style="margin-right: .5em; font-size: larger;"
+                                    (click)="evento(rowData.id_cuadro) "></button>
+                                <button title="Editar" pButton type="button"
+                                    [routerLink]="['/usuarios/cuadro-editar', rowData.id_cuadro]" class="orange-btn"
+                                    icon="ui-icon-edit" style="margin-right: .5em; font-size: larger;"></button>
+                                <button title="Editar" pButton type="button"
+                                    [routerLink]="['/usuarios/cuadro-editar', rowData.id_cuadro]" class="pink-btn"
+                                    icon="ui-icon-delete" style="margin-right: .5em; font-size: larger;"></button>
+
+                            </td> -->
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

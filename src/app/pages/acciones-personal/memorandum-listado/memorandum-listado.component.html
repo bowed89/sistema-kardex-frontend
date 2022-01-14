@@ -1,0 +1,55 @@
+<div class="col-sm-12 col-lg-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="card card-w-title">
+
+                <p-table #dt [columns]="cols" [style]="{'margin-bottom':'20px'}" [value]="personal" [paginator]="true"
+                    [rows]="10" dataKey="vin">
+                    <ng-template pTemplate="caption">
+                        <p style="font-size: 16px;">MODULO MEMORANDUM</p>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr [pSelectableRow]="rowData">
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngSwitch]="col.field">
+                                {{col.header}}
+                                <p-sortIcon [field]="col.field"></p-sortIcon>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th *ngFor="let col of columns" [ngSwitch]="col.field" style="padding: .5em;">
+                                <input *ngSwitchCase="'nombres'" pInputText type="text" placeholder="Buscar por nombres"
+                                    class="ui-column-filter" style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'ap_paterno'" pInputText type="text"
+                                    placeholder="Buscar por apellidos" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                                <input *ngSwitchCase="'ci'" pInputText type="text"
+                                    placeholder="Buscar por cédula de identidad" class="ui-column-filter"
+                                    style="width: 100%; margin-top: 0;"
+                                    (input)="dt.filter($event.target.value, col.field, 'startsWith')">
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pEditableRow]="rowData">
+                            <td>{{ rowData.nombres}}</td>
+                            <td>{{ rowData.ap_paterno }} {{ rowData.ap_materno }}</td>
+                            <td>{{ rowData.ci }} {{ rowData.extension }}.</td>
+                            <td>
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p-dropdown [options]="extension" [(ngModel)]="accionseleccionada"
+                                            (onChange)="seleccionarAccion($event.value, rowData.id_personal)">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
